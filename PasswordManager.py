@@ -124,11 +124,14 @@ class PasswordManager:
                     decrypted_data = self.decrypt_data(key, iv, ciphertext)
                     credentials = json.loads(decrypted_data.decode())
                     
-                    messagebox.showinfo("Credentials",
-                                      f"Username: {credentials['username']}\nPassword: {credentials['password']}")
+                    # Populate the username and password fields
+                    self.username_entry.delete(0, tk.END)
+                    self.username_entry.insert(0, credentials["username"])
+                    self.password_entry.delete(0, tk.END)
+                    self.password_entry.insert(0, credentials["password"])
                     return
                 except Exception as e:
-                    messagebox.showerror("Error", "Decryption failed. Wrong master password")
+                    messagebox.showerror("Error", "Decryption failed. Wrong master password?")
                     return
 
         messagebox.showinfo("Not Found", "No credentials found for this website")
